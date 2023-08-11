@@ -1,39 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+}
+body {
+    color: White;
+    font-family: "Roboto", sans-serif;
+    background-color: #424389;
+}
 .App {
-  text-align: center;
+    width: 800px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.post {
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 black;
+    background-color: rgb(65, 51, 108);
+    height: 300px;
+}
+.post__content {
+    width: 100%;
+    height: 100%;
+}
+.description {
+    padding: 10px;
+}
+.coverContainer {
+    position: relative;
+    height: 200px;
+}
+.cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+.coverContainer::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg,
+        rgba(65, 51, 108, 1),
+        rgba(255, 0, 0, 0) 70%
+    );
+}
+.post-enter {
+    transform: translateX(-350px);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
+.post-enter-active {
+    transform: translateX(0px);
+    transition: all 500ms ease-in;
 }
 
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.post-exit {
+    opacity: 1;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+.post-exit-active {
+    transform: translateX(-350px);
+    transition: all 500ms ease-in;
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page__wrapper {
+    margin-top: 30px;
+    display: flex;
+}
+.page {
+    padding: 10px;
+    border: 1px solid teal;
+    cursor: pointer;
+}
+.page__current {
+    border: 2px solid orange;
+    font-weight: bold;
+}
+
+@media only screen and (min-device-width: 360px) and (max-device-width: 414px) {
+    .post {
+        width: 90%;
+    }
 }
