@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import About from "./pages/About";
+import Post from "./pages/Post";
 import Posts from "./pages/Posts";
 import "./styles/App.css";
 
@@ -11,7 +11,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Posts />}/>
-                <Route path="/about" element={<About />}/>
+                <Route path="/game/:gameId" element={<Post />}/>
             </Routes>
         </BrowserRouter>
     )

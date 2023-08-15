@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const PostItem = (props) => {
     const ratingStars = [];
@@ -13,12 +14,13 @@ const PostItem = (props) => {
                 fill="none"
                 width="30px"
                 height="30px"
+                key={props.post.id+'.'+i}
             >
                 {Math.ceil(props.post.rating) === i && (
                     <defs>
                         <linearGradient id={"ratingGradient" + props.post.id}>
-                            <stop offset={rating} stop-color="gold" />
-                            <stop offset={rating} stop-color="black" />
+                            <stop offset={rating} stopColor="gold" />
+                            <stop offset={rating} stopColor="black" />
                         </linearGradient>
                     </defs>
                 )}
@@ -51,7 +53,7 @@ const PostItem = (props) => {
                     />
                 </div>
                 <div className="description">
-                    <h3 className="title">{props.post.name}</h3>
+                    <h3 className="title"><Link to={"/game/"+props.post.id}>{props.post.name}</Link></h3>
                     <div className="date">
                         Дата выхода: {props.post.released}
                     </div>
