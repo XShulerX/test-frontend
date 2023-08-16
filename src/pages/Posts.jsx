@@ -38,10 +38,6 @@ function Posts() {
         }
     );
 
-    useObserver(lastElement, page < totalPages, isPostsLoading, () => {
-        setPage(page + 1);
-    });
-
     useEffect(() => {
         fetchPosts(limit, page);
     }, [page]);
