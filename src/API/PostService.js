@@ -32,7 +32,7 @@ export default class PostService {
         limit = 10,
         page = 1,
         search = '',
-        ordering,
+
     ) {
         const response = await axios.get(
             `https://api.rawg.io/api/games`,
@@ -44,6 +44,45 @@ export default class PostService {
                     search: search,
                     search_exact: true,
                     search_precise: true,
+                    withCredentials: true,
+                },
+            }
+        );
+        return response;
+    }
+
+    static async getAllPostsByPlatform(
+        limit = 10,
+        page = 1,
+        platform,
+    ) {
+        const response = await axios.get(
+            `https://api.rawg.io/api/games`,
+            {
+                params: {
+                    key: keyAPI,
+                    page_size: limit,
+                    page: page,
+                    parent_platforms: platform,
+                    withCredentials: true,
+                },
+            }
+        );
+        return response;
+    }
+
+    static async getAllOrdering(
+        limit = 10,
+        page = 1,
+        ordering,
+    ) {
+        const response = await axios.get(
+            `https://api.rawg.io/api/games`,
+            {
+                params: {
+                    key: keyAPI,
+                    page_size: limit,
+                    page: page,
                     ordering: ordering,
                     withCredentials: true,
                 },
@@ -52,26 +91,4 @@ export default class PostService {
         return response;
     }
 
-    static async getTestAPI(
-        limit = 10,
-        page = 1,
-        search = "Grand Theft Auto",
-        search_exact = true,
-        ordering = "released",
-        platforms = 1
-    ) {
-        const response = await axios.get(
-            `https://api.rawg.io/api/games?key=${keyAPI}`,
-            {
-                params: {
-                    search: search,
-                    search_exact: search_exact,
-                    ordering: ordering,
-                    parent_platforms: platforms,
-                    withCredentials: true,
-                },
-            }
-        );
-        return response;
-    }
 }

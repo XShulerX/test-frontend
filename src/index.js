@@ -1,6 +1,8 @@
-import { render } from "@testing-library/react";
-import React, { StrictMode } from "react";
+import React from "react";
 import App from "./App";
+import {createRoot} from 'react-dom/client';
 
 const rootElement = document.getElementById("root");
-render(<App />, rootElement);
+const root = createRoot(rootElement);
+root.render(<App />);
+

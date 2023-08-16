@@ -14,37 +14,79 @@ function Posts() {
         query: "",
         ordering: "",
         platforms: "",
-        orderByAscending: true,
+        orderByAscending: '',
     });
 
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
-    const [previousQuery, setPreviousQuery] = useState();
-    // const sortedPosts = useSortedPosts(
-    //     posts,
-    //     filter.sort,
-    //     filter.orderByAscending
-    // );
+
     const lastElement = useRef();
 
     const [fetchPosts, isPostsLoading, postError] = useFetching(
         async (limit, page, query, ordering, platform) => {
-            const response = await PostService.getSearch(limit, page, query, ordering, platform);
-            setPreviousQuery(response);
-            setPosts([...posts, ...response.data.results]);
-            const totalCount = response.data.count;
-            setTotalPages(getPageCount(totalCount, limit));
+            if (query && !ordering && !platform) {
+
+                const response = await PostService.getSearch(
+                    limit,
+                    page,
+                    query
+                );
+
+                setPosts([...posts, ...response.data.results]);
+                const totalCount = response.data.count;
+                setTotalPages(getPageCount(totalCount, limit));
+            }
+            if (ordering && !platform) {
+                const response = await PostService.getAllOrdering(
+                    limit,
+                    page,
+                    ordering
+                );
+
+                setPosts([...posts, ...response.data.results]);
+                const totalCount = response.data.count;
+                setTotalPages(getPageCount(totalCount, limit));
+            }
+            if (platform) {
+
+                const response = await PostService.getAllPostsByPlatform(
+                    limit,
+                    page,
+                    platform
+                );
+
+                setPosts([...posts, ...response.data.results]);
+                const totalCount = response.data.count;
+                setTotalPages(getPageCount(totalCount, limit));
+            } 
+            if(!query && !platform && !ordering){
+
+                const response = await PostService.getPosts(limit, page);
+
+                setPosts([...posts, ...response.data.results]);
+                const totalCount = response.data.count;
+                setTotalPages(getPageCount(totalCount, limit));
+            }
         }
     );
 
+    useObserver(lastElement, page < totalPages, isPostsLoading, () => {
+        setPage(page + 1);
+    });
+
     useEffect(() => {
-        fetchPosts(limit, page);
-    }, [page]);
+        fetchPosts(limit, page, filter.query, filter.orderByAscending + filter.ordering, filter.platform);
+    }, [page, filter]);
 
     return (
         <div className="Posts">
-            <PostFilter fetchPosts={fetchPosts} filter={filter} setFilter={setFilter} setPosts={setPosts}/>
+            <PostFilter
+                fetchPosts={fetchPosts}
+                filter={filter}
+                setFilter={setFilter}
+                setPosts={setPosts}
+            />
             {postError && <h1>Произошла ошибка ${postError}</h1>}
 
             <PostList posts={posts} title="Каталог игр" />

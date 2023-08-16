@@ -10,17 +10,21 @@
     display: flex;
     justify-content: center;
 }
+
 body {
     color: White;
     font-family: "Roboto", sans-serif;
     background-color: #424389;
 }
+
 a{
     color:white;
 }
+
 a:visited{
     color:white;
 }
+
 .App {
     width: 800px;
 }
@@ -36,23 +40,28 @@ a:visited{
     background-color: rgb(65, 51, 108);
     height: 300px;
 }
+
 .post__content {
     width: 100%;
     height: 100%;
 }
+
 .description {
     padding: 10px;
 }
+
 .coverContainer {
     position: relative;
     height: 200px;
 }
+
 .cover {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
 }
+
 .coverContainer::after {
     content: "";
     position: absolute;
@@ -66,6 +75,7 @@ a:visited{
         rgba(255, 0, 0, 0) 70%
     );
 }
+
 .post-enter {
     transform: translateX(-350px);
 }
@@ -90,18 +100,16 @@ a:visited{
     align-items: center;
 }
 
-.page__wrapper {
-    margin-top: 30px;
-    display: flex;
+.postGame{
+    width: 100%;
 }
-.page {
-    padding: 10px;
-    border: 1px solid teal;
-    cursor: pointer;
+.description{
+    text-align: justify;
 }
-.page__current {
-    border: 2px solid orange;
-    font-weight: bold;
+.image img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 @media only screen and (min-device-width: 360px) and (max-device-width: 414px) {
