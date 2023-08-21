@@ -3,9 +3,13 @@ import MyInput from "./UI/input/MyInput";
 import MySelect from "./UI/select/MySelect";
 import MyButton from "./UI/button/MyButton";
 
-const PostFilter = ({ fetchPosts, filter, setFilter, setPosts }) => {
+const PostFilter = ({
+    setPage,
+    filter,
+    setFilter,
+    setPosts,
+}) => {
     const seacrhForm = useRef();
-
     return (
         <div>
             <form id="search" ref={seacrhForm}>
@@ -16,7 +20,14 @@ const PostFilter = ({ fetchPosts, filter, setFilter, setPosts }) => {
                         e.preventDefault();
                         setPosts([]);
                         const data = new FormData(seacrhForm.current);
-                        setFilter({ ...filter, query: data.get("query") });
+                        setFilter({
+                            ...filter,
+                            query: data.get("query"),
+                            ordering: "",
+                            platforms: "",
+                            orderByAscending: "",
+                        });
+                        setPage(1);
                     }}
                 >
                     🔍
@@ -27,7 +38,12 @@ const PostFilter = ({ fetchPosts, filter, setFilter, setPosts }) => {
                     value={filter.ordering}
                     onChange={(selectedSort) => {
                         setPosts([]);
-                        setFilter({ ...filter, ordering: selectedSort });
+                        setFilter({
+                            ...filter,
+                            query: "",
+                            ordering: selectedSort,
+                            platforms: "",
+                        });
                     }}
                     defaultValue="Сортировка"
                     options={[
@@ -41,6 +57,8 @@ const PostFilter = ({ fetchPosts, filter, setFilter, setPosts }) => {
                         setPosts([]);
                         setFilter({
                             ...filter,
+                            query: "",
+                            platforms: "",
                             orderByAscending: selectedOrder,
                         });
                     }}
@@ -50,14 +68,6 @@ const PostFilter = ({ fetchPosts, filter, setFilter, setPosts }) => {
                         { value: "-", name: "По убыванию" },
                     ]}
                 />
-                <MyButton
-                    // onClick={(e) => {
-                    //     e.preventDefault();
-                    //     setFilter({...filter})
-                    // }}
-                >
-                    Применить фильтр
-                </MyButton>
             </form>
         </div>
     );

@@ -10,6 +10,7 @@ import "slick-carousel/slick/slick-theme.css";
 const Post = () => {
     const [post, setPost] = useState({});
     const [screenshots, setScreenshots] = useState([]);
+
     const { gameId } = useParams();
     const [fetchScreenshots, isLoading, screenshotsError] = useFetching(async(id)=>{
         const response = await APIService.getGameScreenshots(id);

@@ -5,7 +5,6 @@ import PostList from "../components/PostList";
 import Loader from "../components/UI/Loader/Loader";
 import { useFetching } from "../hooks/useFetching";
 import { useObserver } from "../hooks/useObserver";
-
 import { getPageCount, getPagesArray } from "../utils/pages";
 
 function Posts() {
@@ -14,53 +13,25 @@ function Posts() {
         query: "",
         ordering: "",
         platforms: "",
-        orderByAscending: '',
+        orderByAscending: "",
     });
-
     const [totalPages, setTotalPages] = useState(0);
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
-
     const lastElement = useRef();
 
     const [fetchPosts, isPostsLoading, postError] = useFetching(
         async (limit, page, query, ordering, platform) => {
-            if (query && !ordering && !platform) {
-                const response = await APIService.getSearch(
-                    limit,
-                    page,
-                    query
-                );
-                setPosts([...posts, ...response.data.results]);
-                const totalCount = response.data.count;
-                setTotalPages(getPageCount(totalCount, limit));
-            }
-            if (ordering && !platform) {
-                const response = await APIService.getAllOrdering(
-                    limit,
-                    page,
-                    ordering
-                );
-                setPosts([...posts, ...response.data.results]);
-                const totalCount = response.data.count;
-                setTotalPages(getPageCount(totalCount, limit));
-            }
-            if (platform) {
-                const response = await APIService.getAllPostsByPlatform(
-                    limit,
-                    page,
-                    platform
-                );
-                setPosts([...posts, ...response.data.results]);
-                const totalCount = response.data.count;
-                setTotalPages(getPageCount(totalCount, limit));
-            } 
-            if(!query && !platform && !ordering){
-                const response = await APIService.getPosts(limit, page);
-                setPosts([...posts, ...response.data.results]);
-                const totalCount = response.data.count;
-                setTotalPages(getPageCount(totalCount, limit));
-            }
+            const response = await APIService.getPosts(
+                limit,
+                page,
+                query,
+                ordering,
+                platform
+            );
+            setPosts([...posts, ...response.data.results]);
+            const totalCount = response.data.count;
+            setTotalPages(getPageCount(totalCount, limit));
         }
     );
 
@@ -69,7 +40,13 @@ function Posts() {
     });
 
     useEffect(() => {
-        fetchPosts(limit, page, filter.query, filter.orderByAscending + filter.ordering, filter.platform);
+        fetchPosts(
+            limit,
+            page,
+            filter.query,
+            filter.orderByAscending + filter.ordering,
+            filter.platforms
+        );
     }, [page, filter]);
 
     return (
@@ -79,6 +56,7 @@ function Posts() {
                 filter={filter}
                 setFilter={setFilter}
                 setPosts={setPosts}
+                setPage={setPage}
             />
             {postError && <h1>Произошла ошибка ${postError}</h1>}
 
@@ -95,7 +73,14 @@ function Posts() {
                     <Loader />
                 </div>
             )}
-            <div ref={lastElement} style={{ height: 20 }}></div>
+
+            <div
+                ref={lastElement}
+                style={{
+                    height: 20,
+                    display: isPostsLoading ? "none" : "block",
+                }}
+            ></div>
         </div>
     );
 }
