@@ -116,4 +116,7 @@ a:visited{
     .post {
         width: 90%;
     }
+    .slick-arrow{
+        display: none!important;
+    }
 }

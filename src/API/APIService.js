@@ -2,7 +2,7 @@ import axios from "axios";
 
 const keyAPI = "749e518e5a2f49d7bd7cdbac8ac975b0";
 
-export default class PostService {
+export default class APIService {
     static async getPosts(limit = 10, page = 1) {
         const response = await axios.get(
             `https://api.rawg.io/api/games`,
@@ -90,5 +90,14 @@ export default class PostService {
         );
         return response;
     }
-
+    
+    static async getGameScreenshots(id){
+        const response = await axios.get(
+            `https://api.rawg.io/api/games/${id}/screenshots`,{
+            params:{
+                key: keyAPI,
+            },
+        });
+        return response;
+    }
 }

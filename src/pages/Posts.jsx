@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import PostService from "../API/PostService";
+import APIService from "../API/APIService";
 import PostFilter from "../components/PostFilter";
 import PostList from "../components/PostList";
 import Loader from "../components/UI/Loader/Loader";
@@ -26,44 +26,37 @@ function Posts() {
     const [fetchPosts, isPostsLoading, postError] = useFetching(
         async (limit, page, query, ordering, platform) => {
             if (query && !ordering && !platform) {
-
-                const response = await PostService.getSearch(
+                const response = await APIService.getSearch(
                     limit,
                     page,
                     query
                 );
-
                 setPosts([...posts, ...response.data.results]);
                 const totalCount = response.data.count;
                 setTotalPages(getPageCount(totalCount, limit));
             }
             if (ordering && !platform) {
-                const response = await PostService.getAllOrdering(
+                const response = await APIService.getAllOrdering(
                     limit,
                     page,
                     ordering
                 );
-
                 setPosts([...posts, ...response.data.results]);
                 const totalCount = response.data.count;
                 setTotalPages(getPageCount(totalCount, limit));
             }
             if (platform) {
-
-                const response = await PostService.getAllPostsByPlatform(
+                const response = await APIService.getAllPostsByPlatform(
                     limit,
                     page,
                     platform
                 );
-
                 setPosts([...posts, ...response.data.results]);
                 const totalCount = response.data.count;
                 setTotalPages(getPageCount(totalCount, limit));
             } 
             if(!query && !platform && !ordering){
-
-                const response = await PostService.getPosts(limit, page);
-
+                const response = await APIService.getPosts(limit, page);
                 setPosts([...posts, ...response.data.results]);
                 const totalCount = response.data.count;
                 setTotalPages(getPageCount(totalCount, limit));
