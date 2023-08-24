@@ -11,7 +11,7 @@ const PostFilter = ({
 }) => {
     const seacrhForm = useRef();
     return (
-        <div>
+        <div className="filter">
             <form id="search" ref={seacrhForm}>
                 <MyInput name="query" placeholder="Поиск" />
                 <MyButton

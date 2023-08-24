@@ -6,27 +6,38 @@
     box-sizing: border-box;
 }
 
+:root{
+    --main-bg-color: #811f50;
+    --second-bg-color: #7c0101;
+    --text-color: white;
+}
+
 #root {
     display: flex;
     justify-content: center;
 }
 
 body {
-    color: White;
+    color: var(--text-color);
     font-family: "Roboto", sans-serif;
-    background-color: #424389;
+    background-color: var(--main-bg-color);
 }
 
 a{
-    color:white;
+    color:var(--text-color);
 }
 
 a:visited{
-    color:white;
+    color:var(--text-color);
 }
 
 .App {
     width: 800px;
+}
+
+.flexContainer{
+    display: flex;
+    justify-content: center;
 }
 
 .post {
@@ -37,8 +48,8 @@ a:visited{
     align-items: center;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 black;
-    background-color: rgb(65, 51, 108);
-    height: 300px;
+    background-color: var(--second-bg-color);
+    height: 320px;
 }
 
 .post__content {
@@ -65,14 +76,14 @@ a:visited{
 .coverContainer::after {
     content: "";
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 0px;
+    top: 1px;
     width: 100%;
     height: 100%;
     background: linear-gradient(
         0deg,
-        rgba(65, 51, 108, 1),
-        rgba(255, 0, 0, 0) 70%
+        var(--second-bg-color),
+        #ff000000 70%
     );
 }
 
@@ -111,9 +122,15 @@ a:visited{
     height: 100%;
     object-fit: contain;
 }
-
+.filter{
+    margin: 15px 0 0 0
+}
 @media only screen and (min-device-width: 360px) and (max-device-width: 414px) {
     .post {
+        width: 90%;
+        height: 320px;
+    }
+    .filter{
         width: 90%;
     }
     .slick-arrow{

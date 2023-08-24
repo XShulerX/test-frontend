@@ -51,13 +51,15 @@ function Posts() {
 
     return (
         <div className="Posts">
-            <PostFilter
-                fetchPosts={fetchPosts}
-                filter={filter}
-                setFilter={setFilter}
-                setPosts={setPosts}
-                setPage={setPage}
-            />
+            <div className="flexContainer">
+                <PostFilter
+                    fetchPosts={fetchPosts}
+                    filter={filter}
+                    setFilter={setFilter}
+                    setPosts={setPosts}
+                    setPage={setPage}
+                />
+            </div>
             {postError && <h1>Произошла ошибка ${postError}</h1>}
 
             <PostList posts={posts} title="Каталог игр" />
