@@ -1,7 +1,5 @@
-import React, { useRef } from "react";
-import MyInput from "./UI/input/MyInput";
+import React from "react";
 import MySelect from "./UI/select/MySelect";
-import MyButton from "./UI/button/MyButton";
 
 const PostFilter = ({
     setPage,
@@ -9,30 +7,9 @@ const PostFilter = ({
     setFilter,
     setPosts,
 }) => {
-    const seacrhForm = useRef();
+
     return (
         <div className="filter">
-            <form id="search" ref={seacrhForm}>
-                <MyInput name="query" placeholder="Поиск" />
-                <MyButton
-                    type="submit"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setPosts([]);
-                        const data = new FormData(seacrhForm.current);
-                        setFilter({
-                            ...filter,
-                            query: data.get("query"),
-                            ordering: "",
-                            platforms: "",
-                            orderByAscending: "",
-                        });
-                        setPage(1);
-                    }}
-                >
-                    🔍
-                </MyButton>
-            </form>
             <form id="filter">
                 <MySelect
                     value={filter.ordering}
