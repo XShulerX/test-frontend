@@ -22,8 +22,6 @@ function Posts() {
     const [page, setPage] = useState(1);
     const [filterBar, setFilterBar] = useState(false);
 
-    const lastElement = useRef();
-    
     const [fetchPosts, isPostsLoading, postError] = useFetching(
         async (limit, page, query, ordering, platform) => {
             const response = await APIService.getPosts(
@@ -39,10 +37,6 @@ function Posts() {
         }
     );
 
-    useObserver(lastElement, page < totalPages, isPostsLoading, () => {
-        setPage(page + 1);
-    });
-
     useEffect(() => {
         fetchPosts(
             limit,
@@ -54,7 +48,7 @@ function Posts() {
     }, [page, filter]);
 
     return (
-        <div className="Posts">
+        <div className="pagePosts">
             <div className="stickyBlock">
                 <div className="searchBar flexContainer">
                     <PostSearch
@@ -67,7 +61,7 @@ function Posts() {
                         onClick={() => {
                             setFilterBar(true);
                         }}
-                        className="btnFilters"
+                        className="btnFilters mobile"
                     >
                         <img
                             className="icon"
@@ -78,26 +72,34 @@ function Posts() {
                 </div>
             </div>
             {postError && <h1>Произошла ошибка ${postError}</h1>}
-
-            <PostList posts={posts} title="Каталог игр" />
-
-            {isPostsLoading && (
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        marginTop: "50px",
-                    }}
-                >
-                    <Loader />
+            <div className="mainContent">
+                <PostList
+                    posts={posts}
+                    title="Каталог игр"
+                    isPostsLoading={isPostsLoading}
+                    page={page}
+                    setPage={setPage}
+                    totalPages={totalPages}
+                />
+                <div className="sidebarMenu">
+                    <h1>Фильтры</h1>
+                    <div className="sidebarContent">
+                        <PostFilter
+                            setPage={setPage}
+                            setFilter={setFilter}
+                            setPosts={setPosts}
+                            filter={filter}
+                        />
+                    </div>
                 </div>
-            )}
+            </div>
+
             <div
                 onClick={(e) => {
                     if (e.target !== e.currentTarget) return;
                     setFilterBar(false);
                 }}
-                className={(filterBar ? "active" : "") + " sidebarMenu"}
+                className={(filterBar ? "active" : "") + " sidebarMenu mobile"}
             >
                 <div className="sidebarContent">
                     <PostFilter
@@ -108,13 +110,6 @@ function Posts() {
                     />
                 </div>
             </div>
-            <div
-                ref={lastElement}
-                style={{
-                    height: 20,
-                    display: isPostsLoading ? "none" : "block",
-                }}
-            ></div>
         </div>
     );
 }

@@ -39,50 +39,55 @@ const Post = () => {
     return (
         <div className="postGame">
             <h1 className="title">{post.name}</h1>
-            <div className="image">
-                <img src={post.background_image} alt="background_image" />
-            </div>
-            <div className="details">
-                <h2>Details: </h2>
-                <ul>
-                    <li>
-                        Rating:
-                        <Rating
-                            dataRating={post.rating}
-                            dataId={post.id}
-                            size={"30px"}
-                        />
-                    </li>
-                    <li>
-                        Platforms:
-                        <div className="platforms">
-                            {post.parent_platforms?.map((platform, index) => (
-                                <div className="platform" key={index}>
-                                    <img
-                                        className="icon"
-                                        src={
-                                            "/icon" +
-                                            platform.platform.name +
-                                            ".png"
-                                        }
-                                        alt={platform.platform.name}
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    </li>
-                    <li>
-                        Website:
-                        <div>
-                             <a href={post.website}>{post.website}</a>
-                        </div>
-                    </li>
-                </ul>
+            <div className="mainBody">
+                <div className="image">
+                    <img src={post.background_image} alt="background_image" />
+                </div>
+                <div className="details">
+                    <h2>Details: </h2>
+                    <ul>
+                        <li>
+                            Rating:
+                            <Rating
+                                dataRating={post.rating}
+                                dataId={post.id}
+                                size={"30px"}
+                            />
+                        </li>
+                        <li>
+                            Platforms:
+                            <div className="platforms">
+                                {post.parent_platforms?.map(
+                                    (platform, index) => (
+                                        <div className="platform" key={index}>
+                                            <img
+                                                className="icon"
+                                                src={
+                                                    "/icon" +
+                                                    platform.platform.name +
+                                                    ".png"
+                                                }
+                                                alt={platform.platform.name}
+                                            />
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        </li>
+                        <li>
+                            Website:
+                            <div>
+                                 <a href={post.website}>{post.website}</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div className="description">
                 <h2>Description</h2>
-                <ShowMore text={post.description_raw} limit={250}/>
+                <ShowMore text={post.description_raw} limit={250} />
             </div>
+            <h2>Screenshots</h2>
             <Slider {...sliderSettings}>
                 {screenshots.map((screenshot, index) => (
                     <div key={index}>
