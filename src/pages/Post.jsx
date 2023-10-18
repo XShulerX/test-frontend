@@ -12,10 +12,12 @@ const Post = () => {
     const [post, setPost] = useState({});
     const [screenshots, setScreenshots] = useState([]);
     const { gameId } = useParams();
+    // eslint-disable-next-line no-unused-vars
     const [fetchPost, isPostLoading, postError] = useFetching(async (id) => {
         const response = await APIService.getPost(id);
         setPost(response.data);
     });
+    // eslint-disable-next-line no-unused-vars
     const [fetchScreenshots, isLoading, screenshotsError] = useFetching(
         async (id) => {
             const response = await APIService.getGameScreenshots(id);
@@ -34,6 +36,7 @@ const Post = () => {
     useEffect(() => {
         fetchPost(gameId);
         fetchScreenshots(gameId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

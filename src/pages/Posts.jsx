@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import APIService from "../API/APIService";
 import PostFilter from "../components/PostFilter";
 import PostList from "../components/PostList";
 import PostSearch from "../components/PostSearch";
 import MyButton from "../components/UI/button/MyButton";
-import Loader from "../components/UI/Loader/Loader";
 import { useFetching } from "../hooks/useFetching";
-import { useObserver } from "../hooks/useObserver";
-import { getPageCount, getPagesArray } from "../utils/pages";
+import { getPageCount } from "../utils/pages";
 
 function Posts() {
     const [posts, setPosts] = useState([]);
@@ -18,6 +16,7 @@ function Posts() {
         orderByAscending: "",
     });
     const [totalPages, setTotalPages] = useState(0);
+    // eslint-disable-next-line no-unused-vars
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [filterBar, setFilterBar] = useState(false);
@@ -45,6 +44,7 @@ function Posts() {
             filter.orderByAscending + filter.ordering,
             filter.platforms
         );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, filter]);
 
     return (
