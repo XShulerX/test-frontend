@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const keyAPI = "749e518e5a2f49d7bd7cdbac8ac975b0";
+const keyAPI = "Your key";
 
 export default class APIService {
     static async getPosts(limit = 10, page = 1, search, ordering, platform) {
